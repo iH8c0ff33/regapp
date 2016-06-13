@@ -3,3 +3,4 @@ git --work-tree=/var/regapp --git-dir=/var/git/regapp.git checkout -f
 cp -r /var/regapp/hooks /var/git/regapp.git
 #updated :D goddamned fuck
 #does it work now?
+#god
