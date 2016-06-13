@@ -1,0 +1,4 @@
+#!/bin/sh
+git --work-tree=/var/regapp --git-dir=/var/git/regapp.git checkout -f
+cp -r /var/regapp/hooks /var/git/regapp.git/hooks
+#updated :D
