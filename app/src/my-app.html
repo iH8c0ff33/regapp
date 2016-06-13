@@ -22,119 +22,101 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-app">
+    <template>
+        <style>
+            :host {
+                display: block;
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+            }
 
-  <template>
+            app-header {
+                background-color: var(--app-primary-color);
+                color: #fff;
+            }
 
-    <style>
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
 
-      :host {
-        display: block;
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
-      }
+            .drawer-list {
+                margin: 0 20px;
+            }
 
-      app-header {
-        background-color: var(--app-primary-color);
-        color: #fff;
-      }
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
+            .drawer-list a {
+                display: block;
+                padding: 0 16px;
+                line-height: 40px;
+                text-decoration: none;
+                color: var(--app-secondary-color);
+            }
 
-      .drawer-list {
-        margin: 0 20px;
-      }
-      .drawer-list a {
-        display: block;
-        padding: 0 16px;
-        line-height: 40px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-      }
-      .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
-      }
-      .drawer-list a.subroute {
-        padding-left: 32px;
-      }
+            .drawer-list a.iron-selected {
+                color: black;
+                font-weight: bold;
+            }
 
+            .drawer-list a.subroute {
+                padding-left: 32px;
+            }
+        </style>
+        <app-location route="{{route}}"></app-location>
+        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <app-drawer-layout fullbleed>
+            <!-- Drawer content -->
+            <app-drawer>
+                <app-toolbar>Menu</app-toolbar>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a name="view1" href="/view1">View One</a>
+                    <a name="view2" href="/view2">View Two</a>
+                    <a name="view3" href="/view3">View Three</a>
+                </iron-selector>
+            </app-drawer>
+            <!-- Main content -->
+            <app-header-layout has-scrolling-region>
+                <app-header condenses reveals effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        <div title>My App</div>
+                    </app-toolbar>
+                </app-header>
+                <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+                    <my-view1 name="view1"></my-view1>
+                    <my-view2 name="view2"></my-view2>
+                    <my-view3 name="view3"></my-view3>
+                </iron-pages>
+            </app-header-layout>
+        </app-drawer-layout>
+    </template>
+    <script>
+        Polymer({
 
-    </style>
+            is: 'my-app',
 
-    <app-location route="{{route}}"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+            properties: {
 
-    <app-drawer-layout fullbleed>
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                },
 
-      <!-- Drawer content -->
-      <app-drawer>
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1">View One</a>
-          <a name="view2" href="/view2">View Two</a>
-          <a name="view3" href="/view3">View Three</a>
-        </iron-selector>
-      </app-drawer>
+            },
 
-      <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+            observers: [
+                '_routePageChanged(routeData.page)'
+            ],
 
-        <app-header condenses reveals effects="waterfall">
-          <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div title>My App</div>
-          </app-toolbar>
-        </app-header>
+            _routePageChanged: function(page) {
+                this.page = page || 'view1';
+            },
 
-        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-        </iron-pages>
+            _pageChanged: function(page) {
+                // load page import on demand.
+                this.importHref(
+                    this.resolveUrl('my-' + page + '.html'), null, null, true);
+            }
 
-      </app-header-layout>
-
-    </app-drawer-layout>
-
-  </template>
-
-  <script>
-
-    Polymer({
-
-      is: 'my-app',
-
-      properties: {
-
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged'
-        },
-
-      },
-
-      observers: [
-        '_routePageChanged(routeData.page)'
-      ],
-
-      _routePageChanged: function(page) {
-        this.page = page || 'view1';
-      },
-
-      _pageChanged: function(page) {
-        // load page import on demand.
-        this.importHref(
-          this.resolveUrl('my-' + page + '.html'), null, null, true);
-      }
-
-    });
-
-  </script>
-
+        });
+    </script>
 </dom-module>
