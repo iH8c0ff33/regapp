@@ -1,7 +1,4 @@
 #!/bin/sh
-git --work-tree=/var/regapp --git-dir=/var/git/regapp.git checkout -f
-cp -r /var/regapp/hooks /var/git/regapp.git
-/var/regapp/deplay.sh
 docker rmi regapp_image
 docker build -t regapp_image /var/regapp
 docker network create regapp_network
