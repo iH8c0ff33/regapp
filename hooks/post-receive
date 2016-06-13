@@ -1,6 +1,9 @@
 #!/bin/sh
 git --work-tree=/var/regapp --git-dir=/var/git/regapp.git checkout -f
 cp -r /var/regapp/hooks /var/git/regapp.git
-#updated :D goddamned fuck
-#does it work now?
-#god
+docker rmi regapp_image
+docker build -t regapp_image
+docker network create regapp_network
+docker stop regapp
+docker rm regapp
+docker run -i -t -d --name regapp --net regapp_network regapp_image
