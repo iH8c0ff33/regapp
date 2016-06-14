@@ -53,25 +53,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
         <app-location route="{{route}}"></app-location>
-        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <app-route route="{{route}}" pattern="/el/:view" data="{{viewData}}" tail="{{subroute}}"></app-route>
+        <app-route route="{{route}}" pattern="/:page" data="{{pageData}}" tail="{{daw}}"></app-route>
         <app-drawer-layout fullbleed>
             <!-- Drawer content -->
             <app-drawer swipeOpen=true>
                 <app-toolbar>Menu</app-toolbar>
-                <paper-menu selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <a href="/view1" name="view1">
+                <paper-menu selected="[[view]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a href="/el/view1" name="view1">
                         <paper-item>
                             view1
                             <paper-ripple></paper-ripple>
                         </paper-item>
                     </a>
-                    <a href="/view2" name="view2">
+                    <a href="/el/view2" name="view2">
                         <paper-item>
                             view2
                             <paper-ripple></paper-ripple>
                         </paper-item>
                     </a>
-                    <a href="/view3" name="view3">
+                    <a href="/el/view3" name="view3">
                         <paper-item>
                             view3
                             <paper-ripple></paper-ripple>
@@ -87,13 +88,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div title>My App</div>
                     </app-toolbar>
                 </app-header>
-                <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+                <iron-pages role="main" selected="[[view]]" attr-for-selected="name">
                     <my-view1 name="view1"></my-view1>
                     <my-view2 name="view2"></my-view2>
                     <my-view3 name="view3"></my-view3>
                 </iron-pages>
             </app-header-layout>
         </app-drawer-layout>
+        <my-script></my-script>
     </template>
     <script>
         Polymer({
@@ -107,23 +109,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     reflectToAttribute: true,
                     observer: '_pageChanged'
                 },
+                view: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_viewChanged'
+                },
 
             },
 
             observers: [
-                '_routePageChanged(routeData.page)'
+                '_routeViewChanged(viewData.view)'
             ],
 
-            _routePageChanged: function(page) {
-                this.page = page || 'view1';
+            _routeViewChanged: function(page) {
+                this.view = page || 'view1';
             },
 
-            _pageChanged: function(page) {
+            _viewChanged: function(view) {
                 // load page import on demand.
                 this.importHref(
-                    this.resolveUrl('my-' + page + '.html'), null, null, true);
+                    this.resolveUrl('my-' + view + '.html'), null, null, true);
             }
 
         });
+        Polymer.Base.importHref('/src/my-script.html', null, null, true);
     </script>
 </dom-module>
