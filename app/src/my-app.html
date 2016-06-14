@@ -19,6 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-app">
@@ -39,38 +42,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 --paper-icon-button-ink-color: white;
             }
 
-            .drawer-list {
-                margin: 0 20px;
-            }
-
             .drawer-list a {
-                display: block;
-                padding: 0 16px;
-                line-height: 40px;
                 text-decoration: none;
                 color: var(--app-secondary-color);
             }
 
-            .drawer-list a.iron-selected {
+            .drawer-list a.iron-selected paper-item {
                 color: black;
                 font-weight: bold;
-            }
-
-            .drawer-list a.subroute {
-                padding-left: 32px;
             }
         </style>
         <app-location route="{{route}}"></app-location>
         <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
         <app-drawer-layout fullbleed>
             <!-- Drawer content -->
-            <app-drawer>
+            <app-drawer swipeOpen=true>
                 <app-toolbar>Menu</app-toolbar>
-                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <a name="view1" href="/view1">View One</a>
-                    <a name="view2" href="/view2">View Two</a>
-                    <a name="view3" href="/view3">View Three</a>
-                </iron-selector>
+                <paper-menu selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a href="/view1" name="view1">
+                        <paper-item>
+                            view1
+                            <paper-ripple></paper-ripple>
+                        </paper-item>
+                    </a>
+                    <a href="/view2" name="view2">
+                        <paper-item>
+                            view2
+                            <paper-ripple></paper-ripple>
+                        </paper-item>
+                    </a>
+                    <a href="/view3" name="view3">
+                        <paper-item>
+                            view3
+                            <paper-ripple></paper-ripple>
+                        </paper-item>
+                    </a>
+                </paper-menu>
             </app-drawer>
             <!-- Main content -->
             <app-header-layout has-scrolling-region>
@@ -81,9 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </app-toolbar>
                 </app-header>
                 <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-                    <my-view1 name="view1">
-                        that should be the content <b>BOLD</b>
-                    </my-view1>
+                    <my-view1 name="view1"></my-view1>
                     <my-view2 name="view2"></my-view2>
                     <my-view3 name="view3"></my-view3>
                 </iron-pages>
