@@ -129,9 +129,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 // load page import on demand.
                 this.importHref(
                     this.resolveUrl('my-' + view + '.html'), null, null, true);
+            },
+
+            ready: function () {
+                this.importHref('/src/my-script.html', null, null, true);
             }
 
         });
-        Polymer.Base.importHref('/src/my-script.html', null, null, true);
     </script>
 </dom-module>

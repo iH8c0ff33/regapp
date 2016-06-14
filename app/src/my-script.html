@@ -2,6 +2,8 @@
     <template>
         <script>
             console.log('loaded script');
+            var app = document.querySelector('my-app');
+            app.$$('app-drawer').swipeOpen = true;
         </script>
     </template>
     <script>
