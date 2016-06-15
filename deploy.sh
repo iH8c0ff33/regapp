@@ -9,11 +9,13 @@ docker build -t regapp_db_image /var/regapp/db
 docker kill regapp_db
 docker rm regapp_db
 docker create \
+    --restart always \
     -i -t \
     --net regapp_network \
     --name regapp_db \
     regapp_db_image
 docker create \
+    --restart always \
     -i -t \
     --net regapp_network \
     --name regapp_node \
@@ -21,4 +23,3 @@ docker create \
     regapp_node_image
 docker start regapp_db
 docker start regapp_node
-docker run -i -t -d --name regapp --net regapp_network regapp_image
