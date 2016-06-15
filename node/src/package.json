@@ -1,0 +1,18 @@
+{
+  "name": "regapp",
+  "version": "0.0.0",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "connect-session-sequelize": "^3.0.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "passport": "^0.3.2",
+    "pg": "^5.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.23.3"
+  },
+  "license": "MIT",
+  "description": "useless app for now",
+  "repository": "null"
+}
