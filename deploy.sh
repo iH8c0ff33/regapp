@@ -14,6 +14,8 @@ docker create \
     --net regapp_network \
     --name regapp_db \
     regapp_db_image
+docker kill regapp_node
+docker rm regapp_node
 docker create \
     --restart always \
     -i -t \
